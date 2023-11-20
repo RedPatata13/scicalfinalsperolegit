@@ -10,6 +10,10 @@ One thing to note, is that although I mentioned in the example where the custome
 
 So how exactly does the user input go through the view class to the controller? In my calculator, if you were to look at Program.cs and the Controller class structure, the controller class takes in an instance of each of the two classes(view and model) in it's constructor but the view and model does not have this so this already implies what I said earlier. What's commonly done is to declare a new Eventhandler in the view class but leave it as undefined and then defining it within the controller class. In my calculator, I had an undefined eventHandler as parameter in the View class and then linked the '=' button's Click to it. But then as we know this eventHandler is undefined and as such can't really do anything until we go to the controller class that actually has access to the same isntance of the view class and define what it does there. That means that if we have a method that can return an important string within the view class, we can call that view method within the controller class upon triggering the event.
 
+IMPORTANT:
+-Controllers do not have their own databases, they are just like a connector or a data flow manager
+-the View and the Model class should not directly access each other
+
 For example in my calculator, I had a method to return the string in the inputField and called this in the defined eventHandler within the controller class, upon clicking the '=' button, this triggers the event within the controller class, retrieving the text inside the inputField and saving it in another string variable and using the variable to call a method in the Model class that directly returns the evaluated expression. I can then again use this returned value to update the text inside the outputField through the controller class calling a function within the view class to update the value of the ouputField.
 
 actualy di pa ko kumakain nung sinusulat ko to pero simple lng nmn sya so kaya mo na yan. tinatamad na kong gumawa ng conclusion kase gutom n ko :\
