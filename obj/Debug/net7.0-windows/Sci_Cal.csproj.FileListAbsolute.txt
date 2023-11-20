@@ -1,0 +1,14 @@
+C:\Users\Honeylet Igot\Documents\red_alien13\projects\C#\sci_cal\obj\Debug\net7.0-windows\Sci_Cal.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Honeylet Igot\Documents\red_alien13\projects\C#\sci_cal\obj\Debug\net7.0-windows\Sci_Cal.AssemblyInfoInputs.cache
+C:\Users\Honeylet Igot\Documents\red_alien13\projects\C#\sci_cal\obj\Debug\net7.0-windows\Sci_Cal.AssemblyInfo.cs
+C:\Users\Honeylet Igot\Documents\red_alien13\projects\C#\sci_cal\obj\Debug\net7.0-windows\Sci_Cal.csproj.CoreCompileInputs.cache
+C:\Users\Honeylet Igot\Documents\red_alien13\projects\C#\sci_cal\bin\Debug\net7.0-windows\Sci_Cal.exe
+C:\Users\Honeylet Igot\Documents\red_alien13\projects\C#\sci_cal\bin\Debug\net7.0-windows\Sci_Cal.deps.json
+C:\Users\Honeylet Igot\Documents\red_alien13\projects\C#\sci_cal\bin\Debug\net7.0-windows\Sci_Cal.runtimeconfig.json
+C:\Users\Honeylet Igot\Documents\red_alien13\projects\C#\sci_cal\bin\Debug\net7.0-windows\Sci_Cal.dll
+C:\Users\Honeylet Igot\Documents\red_alien13\projects\C#\sci_cal\bin\Debug\net7.0-windows\Sci_Cal.pdb
+C:\Users\Honeylet Igot\Documents\red_alien13\projects\C#\sci_cal\obj\Debug\net7.0-windows\Sci_Cal.dll
+C:\Users\Honeylet Igot\Documents\red_alien13\projects\C#\sci_cal\obj\Debug\net7.0-windows\refint\Sci_Cal.dll
+C:\Users\Honeylet Igot\Documents\red_alien13\projects\C#\sci_cal\obj\Debug\net7.0-windows\Sci_Cal.pdb
+C:\Users\Honeylet Igot\Documents\red_alien13\projects\C#\sci_cal\obj\Debug\net7.0-windows\Sci_Cal.genruntimeconfig.cache
+C:\Users\Honeylet Igot\Documents\red_alien13\projects\C#\sci_cal\obj\Debug\net7.0-windows\ref\Sci_Cal.dll
