@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "8oJLLxp+UDIHv3Gwb8ZZcpaOLl9v1XXnG+W/YA9AO0Jzq2B6YNlEM+PCJWfeEzauKDm/uQUSj0juPQeKYlp3rQ==",
+  "dgSpecHash": "2UzS0U+6ggzU4HjOWlvzw9/lJM62CiAg4l+T5mf7NhByvPI7ShrEFxcnJL8SPyfUTx08kDvJ4eU/pOLVhONlWQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Honeylet Igot\\Documents\\red_alien13\\projects\\C#\\Sci_Cal\\Sci_Cal.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Honeylet Igot\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
   "logs": []
 }

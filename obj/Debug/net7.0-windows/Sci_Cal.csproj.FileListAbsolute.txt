@@ -12,3 +12,6 @@ C:\Users\Honeylet Igot\Documents\red_alien13\projects\C#\sci_cal\obj\Debug\net7.
 C:\Users\Honeylet Igot\Documents\red_alien13\projects\C#\sci_cal\obj\Debug\net7.0-windows\Sci_Cal.pdb
 C:\Users\Honeylet Igot\Documents\red_alien13\projects\C#\sci_cal\obj\Debug\net7.0-windows\Sci_Cal.genruntimeconfig.cache
 C:\Users\Honeylet Igot\Documents\red_alien13\projects\C#\sci_cal\obj\Debug\net7.0-windows\ref\Sci_Cal.dll
+C:\Users\Honeylet Igot\Documents\red_alien13\projects\C#\Sci_Cal\obj\Debug\net7.0-windows\Sci_Cal.csproj.AssemblyReference.cache
+C:\Users\Honeylet Igot\Documents\red_alien13\projects\C#\Sci_Cal\bin\Debug\net7.0-windows\Newtonsoft.Json.dll
+C:\Users\Honeylet Igot\Documents\red_alien13\projects\C#\Sci_Cal\obj\Debug\net7.0-windows\Sci_Cal.csproj.CopyComplete

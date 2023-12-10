@@ -33,7 +33,14 @@ public class DropDownAddOperandsWindow : Panel
 		
 		InitializeDDOA();
 	}
-	
+	public void CleanUp()
+	{
+		for(int i = 0; i < DDOAButtons.Count; i++)
+		{
+			DDOAButtons[i] = null;
+		}
+		DDOAButtons = null;
+	}
 	private void InitializeDDOA()
 	{
 		int buttonWidth = 90;

@@ -17,6 +17,15 @@ public class NumPad : Panel
 		
 		InitializeNumPad();
 	}
+	public void CleanUp()
+	{
+		for(int i = 0; i < NumButtons.Count; i++)
+		{
+			NumButtons[i] = null;
+		}
+		
+		NumButtons = null;
+	}
 	
 	private void InitializeNumPad()
 	{
@@ -54,7 +63,7 @@ public class NumPad : Panel
 		
 		numButton point = new numButton(210, 220);
 		point.Text = numText[10];
-		zero.Click += (sender, e) => NumButtonClick?.Invoke(sender, e);
+		point.Click += (sender, e) => NumButtonClick?.Invoke(sender, e);
 		moreNumButs.Add(point);
 		Controls.Add(point);
 		

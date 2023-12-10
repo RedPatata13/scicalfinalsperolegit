@@ -20,6 +20,15 @@ public class AdditionalButtons : Panel
 		InitializeAdditionalButtons();
 		
 	}
+	public void CleanUp()
+	{
+		for(int i = 0; i < OpButtons.Count; i++)
+		{
+			OpButtons[i] = null;
+		}
+		OpButtons = null;
+	}
+	
 	
 	public void InitializeAdditionalButtons(){
 		int buttonWidth = 90;

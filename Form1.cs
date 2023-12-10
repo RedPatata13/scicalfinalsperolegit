@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using Sci_Cal.customParts;
 using System.Runtime.InteropServices;
+using Newtonsoft.Json;
 
 public partial class View : Form
 {
@@ -14,6 +15,7 @@ public partial class View : Form
 	private DropDownAddOperandsWindow dropDownOperandsWindow;
 	private HistoryPanel historyPanel;
 	
+	public EventHandler CloseView;
 	public EventHandler SendExpressionToController;
 	public EventHandler SwitchMode;
 	private HashSet<string> longString = new HashSet<string> { "log()",
@@ -60,7 +62,17 @@ public partial class View : Form
 		InitializeDropDownOperators();
 		SetButtonClickEvents();
 		
+		this.FormClosing += (sender , e) => CloseView?.Invoke(sender, e);
+		
     }
+	public void HistoryPanel_InitializeHistoryList(List<HistoryData> hdl)
+	{
+		historyPanel.InitializeHistoryList(hdl);
+	}
+	public List<HistoryData> HistoryPanel_ToBeSavedHistory()
+	{
+		return historyPanel.ToBeSavedHistory;
+	}
 	public string getExpressionFromInOutField()
 	{
 		return inOutField.getExpression();
@@ -69,9 +81,18 @@ public partial class View : Form
 	{
 		inOutField.UpdateOutField(text);
 	}
-	public void UpdateHistoryPanel(int x, int y, string expression, string result, DateTime dt)
+	public void UpdateHistoryPanel(int x, int y, HistoryData hd)
 	{
-		historyPanel.newHistoryItem(x, y, expression, result, dt);
+		historyPanel.NewHistoryItem(x, y, hd);
+		historyPanel.NewHistoryData(hd);
+	}
+	public void UnSubActivate()
+	{
+		UnSub();
+	}
+	public void DisposePanelsActivate()
+	{
+		DisposePanels();
 	}
 	private void InitializeDropDownOperators(){
 		dropDownOperandsWindow = new DropDownAddOperandsWindow(0, topTopButtons.Bottom - 10);
@@ -100,6 +121,28 @@ public partial class View : Form
 		additionalPad = new AdditionalButtons(300, 360);
 		Controls.Add(additionalPad);
 	}
+	private void DisposePanels()
+	{
+		inOutField.Dispose();
+		
+		numPad.CleanUp();
+		numPad.Dispose();
+		
+		additionalPad.CleanUp();
+		additionalPad.Dispose();
+		
+		topTopButtons.CleanUp();
+		topTopButtons.Dispose();
+		
+		bottomTopButtons.CleanUp();
+		bottomTopButtons.Dispose();
+		
+		dropDownOperandsWindow.CleanUp();
+		dropDownOperandsWindow.Dispose();
+		
+		historyPanel.CleanUp();
+		historyPanel.Dispose();
+	}
 	private void SetButtonClickEvents(){
 		numPad.NumButtonClick += SendButtonTextToInputField;
 		additionalPad.OpButtonClick += SendButtonTextToInputField;
@@ -112,6 +155,19 @@ public partial class View : Form
 		topTopButtons.ClearField += DelChars;
 		topTopButtons.GetAns += GetAns;
 		topTopButtons.ShowHistory += HistoryPanelShow;
+	}
+	private void UnSub(){
+		numPad.NumButtonClick -= SendButtonTextToInputField;
+		additionalPad.OpButtonClick -= SendButtonTextToInputField;
+		dropDownOperandsWindow.DDOAButtonClick -= SendButtonTextToInputField;
+		additionalPad.DegRadSwitch -= (sender, e) => SwitchMode(sender, e);
+		additionalPad.EqualButtonClick -= (sender, e) => SendExpressionToController(sender, e);
+		bottomTopButtons.BottomTopButtonsClick -= SendButtonTextToInputField;
+		topTopButtons.ShowInvisField -= ShowAddButtons;
+		topTopButtons.DeleteChar -= DelChars;
+		topTopButtons.ClearField -= DelChars;
+		topTopButtons.GetAns -= GetAns;
+		topTopButtons.ShowHistory -= HistoryPanelShow;
 	}
 	private void HistoryPanelShow(object sender, EventArgs e)
 	{
@@ -177,7 +233,6 @@ public partial class View : Form
         this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         this.ClientSize = new System.Drawing.Size(510, 660);
 		this.FormBorderStyle = FormBorderStyle.FixedSingle;
-
         this.Text = string.Empty;
 		this.ControlBox = false;
 		this.BackColor = ColorTranslator.FromHtml("#5f7470");
@@ -195,6 +250,19 @@ public class Controller
 		
 		view.SendExpressionToController += returnExpression;
 		view.SwitchMode += Switch;
+		view.CloseView += ViewClosing;
+		
+		List<HistoryData> history = model.ToBeSavedHistory;
+		view.HistoryPanel_InitializeHistoryList(history);
+	}
+	private void ViewClosing(object sender, EventArgs e)
+	{
+		model.ActivateSave();
+		view.UnSubActivate();
+		view.DisposePanelsActivate();
+		view.SwitchMode -= Switch;
+		view.CloseView -= ViewClosing;
+		view.Dispose();
 	}
 	private void Switch(object sender, EventArgs e){
 		if(sender is Button button)
@@ -220,13 +288,28 @@ public class Controller
 			bool degrad = (mode == "DEG")? false: true;
 			double result = model.Evaluate(expression, degrad);
 			DateTime dt = DateTime.Now;
-			
-			view.UpdateOutField(result.ToString());
-			view.UpdateHistoryPanel(0, 0, expression, result.ToString(), dt);
+			string res = (result.ToString().Length > 12)? ToScientificNotation(result): result.ToString();
+				
+			view.UpdateOutField(res);
+			HistoryData hd = new HistoryData(expression, res, dt);
+			view.UpdateHistoryPanel(0, 0, hd);
 		}
 		catch
 		{
 			view.UpdateOutField("Invalid Operation");
+		}
+		string ToScientificNotation(double number)
+		{
+			int exponent = (int)Math.Floor(Math.Log10(Math.Abs(number)));
+			double coefficient = number / Math.Pow(10, exponent);
+			string res = coefficient.ToString();
+			/* for(int i = 7; i < res.Length; i++)
+			{
+				exponent++;
+			} */
+
+			coefficient = Math.Round(coefficient, 8);
+			return $"{coefficient} * 10^{exponent}";
 		}
 	}
 }
@@ -235,6 +318,50 @@ public class Model
 {
 	private static readonly HashSet<string> binaryOperators = new HashSet<string> { "+", "-", "*", "/", "^", "%", "C", "P" };
     private static readonly HashSet<string> unaryOperators = new HashSet<string> { "log", "ln", "sin", "cos", "tan", "sqrt", "cbrt", "asin", "acos", "atan", "hsin","hcos", "htan","abs", "neg", "pi", "fact"};
+	private List<HistoryData> _SavedHistory;
+	private List<HistoryData> _ToBeSavedHistory;
+	private protected string _HistoryFilePath = "./customParts/history.json";
+	public List<HistoryData> ToBeSavedHistory
+	{
+		get{ return _ToBeSavedHistory; }
+		set{ _ToBeSavedHistory = value; }
+	}
+	
+	public Model()
+	{
+		_SavedHistory = LoadHistoryFromFile();
+		_ToBeSavedHistory = new List<HistoryData>();
+		for(int i = 0; i < _SavedHistory.Count; i++)
+		{
+			HistoryData hd = new HistoryData(_SavedHistory[i].Expression, _SavedHistory[i].Result, _SavedHistory[i].Dt);
+			_ToBeSavedHistory.Add(hd);
+		}
+	}
+	public void ActivateSave()
+	{
+		SaveChanges();
+	}
+	private void SaveChanges()
+	{
+		_SavedHistory = null; //remove ref to original loaded list
+		_SavedHistory = _ToBeSavedHistory;
+		string json = JsonConvert.SerializeObject(_SavedHistory); //prep to write to JSON
+		File.WriteAllText(_HistoryFilePath, json); //Overwrite JSON 
+		_SavedHistory = null; //remove ref
+		_ToBeSavedHistory = null; // remove ref
+	}
+	private List<HistoryData> LoadHistoryFromFile()
+	{
+		if(File.Exists(_HistoryFilePath))
+		{
+			string json = File.ReadAllText(_HistoryFilePath);
+			return JsonConvert.DeserializeObject<List<HistoryData>>(json);
+		}
+		else
+		{
+			return new List<HistoryData>();
+		}
+	}
 
     public double Evaluate(string expression, bool mode)
     {
@@ -465,4 +592,3 @@ public class Model
         }
     }
 }
-

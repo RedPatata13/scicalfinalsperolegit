@@ -25,8 +25,8 @@ namespace Sci_Cal.customParts
             outputField = new Label
             {
                 Location = new Point(0, 60),
-                Size = new Size(505, 80),
-                Font = new Font("Xenara Bold", 28),
+                Size = new Size(498, 80),
+                Font = new Font("Xenara Bold", 18),
                 TextAlign = ContentAlignment.MiddleRight,
                 Anchor = AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Left,
                 BorderStyle = BorderStyle.None,
@@ -51,6 +51,7 @@ namespace Sci_Cal.customParts
 			int nextPos = invisInputField.SelectionStart + 1;
 			invisInputField.Text = invisInputField.Text.Insert(invisInputField.SelectionStart, text);
 			invisInputField.SelectionStart = nextPos;
+			invisInputField.Focus();
 		}
 		public void InsertLong(string text)
 		{

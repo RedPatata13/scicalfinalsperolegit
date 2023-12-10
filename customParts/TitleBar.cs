@@ -33,7 +33,7 @@ namespace Sci_Cal.customParts
 			minButton.Text = "-";
 
             exitButton.Click += (sender, e) => {
-                Application.Exit(); // Corrected Application.Exit()
+                Application.Exit();
             };
 			Controls.Add(exitButton);
 			Controls.Add(minButton);

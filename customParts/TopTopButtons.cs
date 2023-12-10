@@ -19,6 +19,10 @@ public class TopTopButtons : Panel
 		
 		InitializeTopTopButtons();
 	}
+	public void CleanUp()
+	{
+		buttons = null;
+	}
 	
 	private void InitializeTopTopButtons()
 	{

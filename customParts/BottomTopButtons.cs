@@ -15,6 +15,10 @@ public class BottomTopButtons : Panel
 		Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
 		InitializeButtons();
 	}
+	public void CleanUp()
+	{
+		buttons = null;
+	}
 	
 	private void InitializeButtons()
 	{
